@@ -1,4 +1,4 @@
-import { BinanceWebSocket } from '@/services/binaceWs';
+import { BinanceWebSocket } from '@/services/marketSocket';
 import { fetchKlines, fetchPairs } from '@/services/binanceRest';
 import { KlinePayload, MiniTickerPayload, PriceData } from '@/types';
 import { toUTCTimestamp } from '@/utils/toUTCTimestamp';

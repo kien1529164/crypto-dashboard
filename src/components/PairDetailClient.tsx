@@ -13,6 +13,7 @@ import { Candle } from '@/types';
 import getStore from '@/stores/marketStore';
 import { setCandles, setSelectedSymbol } from '@/actions/marketActions';
 import { initPairDetail } from '@/orchestrators/marketOrchestrators';
+import { OrderBook } from './OrderBook';
 
 interface Props {
   symbol: string;
@@ -172,6 +173,10 @@ const PairDetailClient = observer(({ symbol, initialCandles }: Props) => {
       {/* Chart */}
       <div className="bg-[#1a1d27] border border-[#2a2d3a] rounded-xl p-4 overflow-hidden">
         <div ref={chartContainerRef} className="w-full" />
+      </div>
+
+      <div className="w-64 shrink-0">
+        <OrderBook symbol={symbol} />
       </div>
     </div>
   );

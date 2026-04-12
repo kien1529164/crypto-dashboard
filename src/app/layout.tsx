@@ -1,4 +1,3 @@
-import '@/orchestrators';
 import { StoreProvider } from '@/components/StoreProvider';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';

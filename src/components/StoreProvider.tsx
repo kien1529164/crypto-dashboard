@@ -1,9 +1,9 @@
 'use client';
 import { useEffect } from 'react';
 import getStore from '@/stores/marketStore';
-
-// Import mutators so they register on app boot — must be imported once globally
-import '@/mutators/marketMutators';
+import '@/orchestrators';
+import '@/mutators';
+import '@/mutators/marketMutator';
 
 interface StoreProviderProps {
   children: React.ReactNode;
