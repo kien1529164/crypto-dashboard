@@ -1,0 +1,16 @@
+{
+  "dashboard": {
+    "title": "Thị trường Crypto",
+    "search": "Tìm kiếm cặp tiền..."
+  },
+  "pair": {
+    "price": "Giá",
+    "change": "Thay đổi 24h",
+    "volume": "Khối lượng"
+  },
+  "settings": {
+    "title": "Cài đặt",
+    "theme": "Giao diện",
+    "language": "Ngôn ngữ"
+  }
+}

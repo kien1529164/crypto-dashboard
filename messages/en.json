@@ -1,0 +1,16 @@
+{
+  "dashboard": {
+    "title": "Crypto Market",
+    "search": "Search pairs..."
+  },
+  "pair": {
+    "price": "Price",
+    "change": "24h Change",
+    "volume": "Volume"
+  },
+  "settings": {
+    "title": "Settings",
+    "theme": "Theme",
+    "language": "Language"
+  }
+}
