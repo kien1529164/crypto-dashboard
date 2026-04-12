@@ -5,19 +5,17 @@ interface OrderBookStore {
   books: Record<string, OrderBookState>;
 }
 
-declare global {
-  var __orderBookStore: (() => OrderBookStore) | undefined;
+const initialState: OrderBookStore = {
+  books: {},
+};
+
+
+const globalKey = '__orderBookStore__';
+
+if (!(global as any)[globalKey]) {
+  (global as any)[globalKey] = createStore('orderBookStore', initialState);
 }
 
-const getOrderBookStore: () => OrderBookStore = (() => {
-  if (global.__orderBookStore) return global.__orderBookStore;
-  try {
-    global.__orderBookStore = createStore<OrderBookStore>('orderBook', {
-      books: {},
-    });
-  } catch {
-  }
-  return global.__orderBookStore!;
-})();
+const getOrderBookStore = (global as any)[globalKey] as () => OrderBookStore;
 
 export default getOrderBookStore;

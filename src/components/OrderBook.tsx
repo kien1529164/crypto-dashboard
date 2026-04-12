@@ -9,8 +9,8 @@ import { unsubscribeOrderBook } from '@/actions/unsubscribeOrderBook';
 interface Props { symbol: string; }
 
 export const OrderBook = observer(({ symbol }: Props) => {
-    const store = getOrderBookStore;
-    const book = store().books[symbol];
+    const store = getOrderBookStore();
+    const book = store.books[symbol];
 
     useEffect(() => {
         subscribeOrderBook(symbol);
