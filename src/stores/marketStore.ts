@@ -1,11 +1,12 @@
 import { createStore } from 'satcheljs';
-import type { CryptoPair, PriceData, Candle, AppSettings } from '@/types';
+import type { CryptoPair, PriceData, Candle, AppSettings, Trade } from '@/types';
 
 interface MarketStore {
   pairs: CryptoPair[];
   prices: Record<string, PriceData>;
   selectedSymbol: string | null;
   candles: Candle[];
+  trades: Trade[];
   settings: AppSettings;
   isLoading: boolean;
   error: string | null;
@@ -16,6 +17,7 @@ const initialState: MarketStore = {
   prices: {},
   selectedSymbol: null,
   candles: [],
+  trades: [] as Trade[], 
   settings: {
     theme: 'dark',
     language: 'en',

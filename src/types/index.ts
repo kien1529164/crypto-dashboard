@@ -48,3 +48,11 @@ export interface AppSettings {
   language: 'en' | 'vi';
   favorites: string[];
 }
+
+export interface Trade {
+  id: number;
+  price: string;
+  quantity: string;
+  time: number;
+  isBuyerMaker: boolean; // true = sell, false = buy
+}
