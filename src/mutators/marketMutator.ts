@@ -1,5 +1,5 @@
 import { mutator } from 'satcheljs';
-import { addTrade, setPairs, setTrades, toggleFavorite, updateLastCandle, updatePrices, updateSettings } from '@/actions/marketActions';
+import { addTrade, setPairs, setTheme, setTrades, toggleFavorite, updateLastCandle, updatePrices, updateSettings } from '@/actions/marketActions';
 import getStore from '@/stores/marketStore';
 import { setLoadingPairs, setLoadingDetail } from '@/actions/marketActions';
 
@@ -72,4 +72,13 @@ mutator(setLoadingPairs, ({ value }) => {
 
 mutator(setLoadingDetail, ({ value }) => {
   getStore().isLoadingDetail = value;
+});
+
+mutator(setTheme, ({ theme }) => {
+  getStore().settings.theme = theme;
+  if (typeof window !== 'undefined') {
+    // toggle dark class on html element
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+    localStorage.setItem('settings', JSON.stringify(getStore().settings));
+  }
 });
