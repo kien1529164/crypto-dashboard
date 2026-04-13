@@ -15,6 +15,7 @@ import { setCandles, setSelectedSymbol } from '@/actions/marketActions';
 import { initPairDetail } from '@/orchestrators/marketOrchestrators';
 import { OrderBook } from './OrderBook';
 import { FavoriteButton } from './FavoriteButton';
+import { TradesFeed } from './TradesFeed';
 
 interface Props {
   symbol: string;
@@ -177,9 +178,16 @@ const PairDetailClient = observer(({ symbol, initialCandles }: Props) => {
         <div ref={chartContainerRef} className="w-full" />
       </div>
 
-      <div className="w-64 shrink-0">
-        <OrderBook symbol={symbol} />
-      </div>
+      {/* Trades feed */}
+<div className="flex gap-4 mt-4">
+  <div className="w-72 shrink-0">
+    <TradesFeed />
+  </div>
+
+  <div className="w-64 shrink-0">
+    <OrderBook symbol={symbol} />
+  </div>
+</div>
     </div>
   );
 });

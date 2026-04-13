@@ -1,12 +1,13 @@
 import { BinanceWebSocket } from '@/services/marketSocket';
-import { fetchKlines, fetchPairs } from '@/services/binanceRest';
+import { fetchKlines, fetchPairs, fetchRecentTrades } from '@/services/binanceRest';
 import { KlinePayload, MiniTickerPayload, PriceData } from '@/types';
 import { toUTCTimestamp } from '@/utils/toUTCTimestamp';
-import { setCandles, setPairs, updateLastCandle, updatePrices } from '../actions/marketActions';
+import { addTrade, setCandles, setPairs, setTrades, updateLastCandle, updatePrices } from '../actions/marketActions';
 
 // Batch buffer for price updates — flush every 300ms
 let priceBuffer: Map<string, PriceData> = new Map();
 let flushTimer: ReturnType<typeof setTimeout> | null = null;
+let tradesWs: BinanceWebSocket | null = null;
 
 function scheduleFlush() {
   if (flushTimer) return;
@@ -53,4 +54,22 @@ export async function initPairDetail(symbol: string) {
     });
   });
   ws.connect();
+
+  const trades = await fetchRecentTrades(symbol);
+  setTrades(trades);
+
+  if (tradesWs) tradesWs.close();
+  tradesWs = new BinanceWebSocket(
+    `${symbol.toLowerCase()}@trade`,
+    (data: any) => {
+      addTrade({
+        id: data.t,
+        price: data.p,
+        quantity: data.q,
+        time: data.T,
+        isBuyerMaker: data.m,
+      });
+    }
+  );
+  tradesWs.connect();
 }

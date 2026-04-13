@@ -1,5 +1,5 @@
 import { mutator } from 'satcheljs';
-import { setPairs, toggleFavorite, updateLastCandle, updatePrices, updateSettings } from '@/actions/marketActions';
+import { addTrade, setPairs, setTrades, toggleFavorite, updateLastCandle, updatePrices, updateSettings } from '@/actions/marketActions';
 import getStore from '@/stores/marketStore';
 
 mutator(setPairs, ({ pairs }) => {
@@ -40,5 +40,27 @@ mutator(toggleFavorite, ({ symbol }) => {
   }
   if (typeof window !== 'undefined') {
     localStorage.setItem('settings', JSON.stringify(getStore().settings));
+  }
+});
+
+mutator(setTrades, ({ trades }) => {
+  const seen = new Set<number>();
+  getStore().trades = trades.filter(t => {
+    if (seen.has(t.id)) return false;
+    seen.add(t.id);
+    return true;
+  });
+});
+
+mutator(addTrade, ({ trade }) => {
+  const trades = getStore().trades;
+  
+  // Deduplicate by id
+  const exists = trades.some(t => t.id === trade.id);
+  if (exists) return;
+
+  trades.unshift(trade);
+  if (trades.length > 50) {
+    trades.pop();
   }
 });
