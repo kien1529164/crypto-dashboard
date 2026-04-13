@@ -1,36 +1,178 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Crypto Market Dashboard
 
-## Getting Started
+## Overview
 
-First, run the development server:
+This project is a **real-time Crypto Market Dashboard** built as part of a Frontend Technical Assessment.
+
+It displays live cryptocurrency data using the Binance API, including:
+
+- Real-time price updates
+- Market overview
+- Token detail view with candlestick chart
+- User personalization (theme, favorites, localization)
+
+The application focuses on **clean architecture, strict typing, and efficient real-time data handling**.
+
+---
+
+## Tech Stack
+
+- **Language:** TypeScript
+- **Framework:** React (Hooks, Functional Components)
+- **State Management:** MobX + SatchelJS (Flux pattern)
+- **Real-time Data:** WebSocket (Binance Streams)
+- **Styling:** TailwindCSS
+- **Charting:** Lightweight Charts
+
+---
+
+## Installation & Setup
 
 ```bash
+# Clone repository
+git clone https://github.com/kien1529164/crypto-dashboard.git
+
+# Install dependencies
+npm install
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open: http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Features
 
-## Learn More
+### Core Features
 
-To learn more about Next.js, take a look at the following resources:
+- Real-time market dashboard (BTC, ETH, BNB, etc.)
+- Live price updates via WebSocket
+- 24h price change indicators
+- Search with auto-suggest
+- Token detail view with candlestick chart
+- Localization (multi-language support)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Bonus Features
 
-## Deploy on Vercel
+- Favorites / Watchlist (persisted)
+- Real-time Order Book (Depth)
+- Light / Dark theme toggle
+- State persistence using localStorage
+- Responsive design
+- Error handling & loading states
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Architecture
+
+This project follows the **SatchelJS (Flux) architecture**:
+
+### Store
+
+Defines application state (market data, UI state, user settings)
+
+### Actions
+
+Describe events:
+
+```ts
+updatePrice(symbol, price);
+setTheme(theme);
+toggleFavorite(symbol);
+```
+
+### Mutators
+
+Pure functions that update the store
+
+### Orchestrators
+
+Handle side effects:
+
+- Fetching REST API data
+- Managing WebSocket connections
+- Dispatching actions
+
+---
+
+## Data Sources
+
+### REST API
+
+- `/exchangeInfo` → Trading pairs
+- `/klines` → Historical candle data
+
+### WebSocket Streams
+
+- `!miniTicker@arr` → Market updates
+- `<symbol>@kline_<interval>` → Chart updates
+- `<symbol>@depth20@100ms` → Order book (bonus)
+
+---
+
+## Performance Considerations
+
+- Batched / throttled WebSocket updates
+- Minimized re-renders using:
+  - `observer` (MobX)
+
+- Efficient state updates (no unnecessary global updates)
+- Selective subscriptions per component
+
+---
+
+## UI/UX Decisions
+
+- Color-coded price changes (green ↑ / red ↓)
+- Smooth real-time updates without flickering
+- Clean and minimal trading dashboard layout
+- Responsive design for mobile & desktop
+- Instant search feedback
+
+---
+
+## Key Design Decisions
+
+- **MobX + SatchelJS** for predictable and scalable state management
+- **WebSocket over polling** for real-time accuracy and efficiency
+- **Separation of concerns** (Store / Action / Mutator / Orchestrator)
+- **TypeScript strict typing** for safety and maintainability
+- **Component modularization** for reusability and clarity
+
+---
+
+## State Persistence
+
+User settings are persisted via `localStorage`:
+
+- Theme (light/dark)
+- Favorites (watchlist)
+- Language preference
+
+---
+
+## Commit Convention
+
+This project follows **Conventional Commits**:
+
+- `feat:` new feature
+- `fix:` bug fix
+- `chore:` maintenance
+- `refactor:` code improvement
+
+---
+
+## Acknowledgements
+
+- Binance API for real-time crypto data
+- Open-source charting libraries
+
+---
+
+## Author
+
+**Kien Nguyen**
