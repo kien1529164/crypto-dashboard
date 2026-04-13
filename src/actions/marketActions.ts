@@ -7,3 +7,4 @@ export const setSelectedSymbol = action('setSelectedSymbol', (symbol: string) =>
 export const setCandles = action('setCandles', (candles: Candle[]) => ({ candles }));
 export const updateLastCandle = action('updateLastCandle', (candle: Candle) => ({ candle }));
 export const updateSettings = action('updateSettings', (settings: Partial<AppSettings>) => ({ settings }));
+export const toggleFavorite = action('toggleFavorite', (symbol: string) => ({ symbol }));

@@ -14,6 +14,7 @@ import getStore from '@/stores/marketStore';
 import { setCandles, setSelectedSymbol } from '@/actions/marketActions';
 import { initPairDetail } from '@/orchestrators/marketOrchestrators';
 import { OrderBook } from './OrderBook';
+import { FavoriteButton } from './FavoriteButton';
 
 interface Props {
   symbol: string;
@@ -109,6 +110,7 @@ const PairDetailClient = observer(({ symbol, initialCandles }: Props) => {
 
       {/* Header */}
       <div className="flex items-center gap-4 mb-6">
+        <FavoriteButton symbol={symbol} />
         <h1 className="text-2xl font-bold">
           {symbol.replace('USDT', '')}
           <span className="text-slate-600 font-normal text-lg">/USDT</span>
