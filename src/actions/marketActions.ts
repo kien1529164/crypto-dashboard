@@ -10,3 +10,5 @@ export const updateSettings = action('updateSettings', (settings: Partial<AppSet
 export const toggleFavorite = action('toggleFavorite', (symbol: string) => ({ symbol }));
 export const setTrades = action('setTrades', (trades: Trade[]) => ({ trades }));
 export const addTrade = action('addTrade', (trade: Trade) => ({ trade }));
+export const setLoadingPairs = action('setLoadingPairs', (value: boolean) => ({ value }));
+export const setLoadingDetail = action('setLoadingDetail', (value: boolean) => ({ value }));

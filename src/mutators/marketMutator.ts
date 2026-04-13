@@ -1,6 +1,7 @@
 import { mutator } from 'satcheljs';
 import { addTrade, setPairs, setTrades, toggleFavorite, updateLastCandle, updatePrices, updateSettings } from '@/actions/marketActions';
 import getStore from '@/stores/marketStore';
+import { setLoadingPairs, setLoadingDetail } from '@/actions/marketActions';
 
 mutator(setPairs, ({ pairs }) => {
   getStore().pairs = pairs;
@@ -63,4 +64,12 @@ mutator(addTrade, ({ trade }) => {
   if (trades.length > 50) {
     trades.pop();
   }
+});
+
+mutator(setLoadingPairs, ({ value }) => {
+  getStore().isLoadingPairs = value;
+});
+
+mutator(setLoadingDetail, ({ value }) => {
+  getStore().isLoadingDetail = value;
 });

@@ -16,6 +16,7 @@ import { initPairDetail } from '@/orchestrators/marketOrchestrators';
 import { OrderBook } from './OrderBook';
 import { FavoriteButton } from './FavoriteButton';
 import { TradesFeed } from './TradesFeed';
+import { StatsSkeleton, ChartSkeleton, TradesSkeleton } from './Skeleton';
 
 interface Props {
   symbol: string;
@@ -94,7 +95,41 @@ const PairDetailClient = observer(({ symbol, initialCandles }: Props) => {
   const changePercent = priceData ? parseFloat(priceData.priceChangePercent) : null;
   const isPositive = changePercent !== null && changePercent >= 0;
 
-  
+  if (store.isLoadingDetail) {
+    return (
+      <div>
+        {/* Back button */}
+        <button
+          onClick={() => router.push('/')}
+          className="flex items-center gap-1.5 text-slate-500 hover:text-slate-300 text-sm mb-5"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="m15 18-6-6 6-6"/>
+          </svg>
+          Back to market
+        </button>
+
+        {/* Header skeleton */}
+        <div className="flex items-center gap-4 mb-6">
+          <div className="h-8 w-36 bg-[#2a2d3a] rounded-lg animate-pulse" />
+          <div className="h-7 w-28 bg-[#2a2d3a] rounded-lg animate-pulse" />
+          <div className="h-6 w-16 bg-[#2a2d3a] rounded-full animate-pulse" />
+        </div>
+
+        <StatsSkeleton />
+
+        <div className="flex gap-4 mt-4">
+          <div className="flex-1 min-w-0">
+            <ChartSkeleton />
+          </div>
+          <div className="w-72 shrink-0">
+            <TradesSkeleton />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="text-slate-200">
       {/* Back button */}
@@ -179,15 +214,15 @@ const PairDetailClient = observer(({ symbol, initialCandles }: Props) => {
       </div>
 
       {/* Trades feed */}
-<div className="flex gap-4 mt-4">
-  <div className="w-72 shrink-0">
-    <TradesFeed />
-  </div>
+      <div className="flex gap-4 mt-4">
+        <div className="w-72 shrink-0">
+          <TradesFeed />
+        </div>
 
-  <div className="w-64 shrink-0">
-    <OrderBook symbol={symbol} />
-  </div>
-</div>
+        <div className="w-64 shrink-0">
+          <OrderBook symbol={symbol} />
+        </div>
+      </div>
     </div>
   );
 });

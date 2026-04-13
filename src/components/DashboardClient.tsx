@@ -1,12 +1,12 @@
 'use client';
-import { useEffect } from 'react';
-import { observer } from 'mobx-react-lite';
-import clsx from 'clsx';
-import { initMarket } from '@/orchestrators/marketOrchestrators';
 import { setPairs } from '@/actions/marketActions';
-import { PairCard } from './PairCard';
+import { initMarket } from '@/orchestrators/marketOrchestrators';
 import getStore from '@/stores/marketStore';
 import type { CryptoPair } from '@/types';
+import { observer } from 'mobx-react-lite';
+import { useEffect } from 'react';
+import { PairCard } from './PairCard';
+import { PairCardSkeleton } from './Skeleton';
 
 interface DashboardClientProps {
   initialPairs: CryptoPair[];
@@ -23,6 +23,20 @@ const DashboardClient = observer(({ initialPairs }: DashboardClientProps) => {
 
   const favoritePairs = store.pairs.filter(p => favorites.includes(p.symbol));
   const otherPairs = store.pairs.filter(p => !favorites.includes(p.symbol));
+
+
+  if (store.isLoadingPairs) {
+    return (
+      <div>
+        {/* Skeleton grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
+          {Array.from({ length: 24 }).map((_, i) => (
+            <PairCardSkeleton key={i} />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">
