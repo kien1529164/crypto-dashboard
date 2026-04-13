@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { CryptoPair } from '@/types';
 import getStore from '@/stores/marketStore';
+import { FavoriteButton } from './FavoriteButton';
 
 interface PairCardProps {
   pair: CryptoPair;
@@ -70,6 +71,7 @@ export const PairCard = observer(({ pair }: PairCardProps) => {
 >
       {/* Header */}
       <div className="flex justify-between items-center mb-2.5">
+        <FavoriteButton symbol={pair.symbol} />
         <span className="text-[13px] font-semibold text-slate-200">
           {pair.baseAsset}
           <span className="text-slate-500 font-normal">

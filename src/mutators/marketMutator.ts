@@ -1,5 +1,5 @@
 import { mutator } from 'satcheljs';
-import { setPairs, updateLastCandle, updatePrices, updateSettings } from '@/actions/marketActions';
+import { setPairs, toggleFavorite, updateLastCandle, updatePrices, updateSettings } from '@/actions/marketActions';
 import getStore from '@/stores/marketStore';
 
 mutator(setPairs, ({ pairs }) => {
@@ -25,6 +25,19 @@ mutator(updateLastCandle, ({ candle }) => {
 
 mutator(updateSettings, ({ settings }) => {
   Object.assign(getStore().settings, settings);
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('settings', JSON.stringify(getStore().settings));
+  }
+});
+
+mutator(toggleFavorite, ({ symbol }) => {
+  const favorites = getStore().settings.favorites;
+  const idx = favorites.indexOf(symbol);
+  if (idx === -1) {
+    favorites.push(symbol);
+  } else {
+    favorites.splice(idx, 1);
+  }
   if (typeof window !== 'undefined') {
     localStorage.setItem('settings', JSON.stringify(getStore().settings));
   }
