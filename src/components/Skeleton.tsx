@@ -1,14 +1,9 @@
-export function Skeleton({ className = '', style }: { className?: string; style?: React.CSSProperties }) {
-  return (
-    <div
-      className={`animate-pulse bg-[#2a2d3a] rounded-lg ${className}`}
-      style={style}
-    />
-  );
+export function Skeleton({ className = "", style }: { className?: string; style?: React.CSSProperties }) {
+  return <div className={`animate-pulse bg-[#2a2d3a] rounded-lg ${className}`} style={style} />;
 }
 export function PairCardSkeleton() {
   return (
-    <div className="rounded-xl border border-[#2a2d3a] bg-[#1a1d27] p-4">
+    <div className="rounded-xl border border-[#2a2d3a] bg-(--bg-primary) p-4">
       <div className="flex justify-between items-center mb-2.5">
         <Skeleton className="h-3.5 w-20" />
         <Skeleton className="h-4 w-12 rounded-full" />
@@ -22,7 +17,7 @@ export function PairCardSkeleton() {
 
 export function ChartSkeleton() {
   return (
-    <div className="bg-[#1a1d27] border border-[#2a2d3a] rounded-xl p-4">
+    <div className="bg-(--bg-primary) border border-[#2a2d3a] rounded-xl p-4">
       <div className="flex items-center gap-3 mb-4">
         <Skeleton className="h-6 w-32" />
         <Skeleton className="h-6 w-24" />
@@ -33,11 +28,7 @@ export function ChartSkeleton() {
         {/* Fake candles for visual effect */}
         <div className="absolute inset-0 flex items-end gap-1 px-4 pb-8 opacity-20">
           {Array.from({ length: 40 }).map((_, i) => (
-            <div
-              key={i}
-              className="flex-1 bg-slate-500 rounded-sm"
-              style={{ height: `${20 + Math.random() * 60}%` }}
-            />
+            <div key={i} className="flex-1 bg-slate-500 rounded-sm" style={{ height: "50%" }} />
           ))}
         </div>
       </div>
@@ -47,7 +38,7 @@ export function ChartSkeleton() {
 
 export function TradesSkeleton() {
   return (
-    <div className="bg-[#1a1d27] border border-[#2a2d3a] rounded-xl overflow-hidden h-[480px] flex flex-col">
+    <div className="bg-(--bg-primary) border border-[#2a2d3a] rounded-xl overflow-hidden h-120 flex flex-col">
       <div className="flex items-center justify-between px-4 py-3 border-b border-[#2a2d3a]">
         <Skeleton className="h-4 w-28" />
         <Skeleton className="h-3 w-10" />
@@ -74,7 +65,7 @@ export function StatsSkeleton() {
   return (
     <div className="flex gap-4 mb-6 flex-wrap">
       {Array.from({ length: 3 }).map((_, i) => (
-        <div key={i} className="bg-[#1a1d27] border border-[#2a2d3a] rounded-xl px-4 py-3 min-w-30">
+        <div key={i} className="bg-(--bg-primary) border border-[#2a2d3a] rounded-xl px-4 py-3 min-w-30">
           <Skeleton className="h-3 w-16 mb-2" />
           <Skeleton className="h-4 w-24" />
         </div>

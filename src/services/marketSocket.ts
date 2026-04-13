@@ -7,13 +7,18 @@ export class BinanceWebSocket {
   private retryDelay = 1000;
   private maxDelay = 30000;
 
-  constructor(private stream: string, private onMessage: (data: any) => void) {}
+  constructor(
+    private stream: string,
+    private onMessage: (data: any) => void,
+  ) {}
 
   connect() {
     this.ws = new WebSocket(`${WS_BASE}/${this.stream}`);
 
     this.ws.onmessage = (e) => {
-      try { this.onMessage(JSON.parse(e.data)); } catch {}
+      try {
+        this.onMessage(JSON.parse(e.data));
+      } catch {}
     };
 
     this.ws.onclose = () => {
@@ -23,8 +28,12 @@ export class BinanceWebSocket {
       }, this.retryDelay);
     };
 
-    this.ws.onopen = () => { this.retryDelay = 1000; };
+    this.ws.onopen = () => {
+      this.retryDelay = 1000;
+    };
   }
 
-  close() { this.ws?.close(); }
+  close() {
+    this.ws?.close();
+  }
 }

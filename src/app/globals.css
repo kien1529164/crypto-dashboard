@@ -1,15 +1,49 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
+@layer components {
+  .card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+  }
+}
+
 * {
   box-sizing: border-box;
 }
 
-body {
-  background-color: #0f1117;
-  color: #e2e8f0;
+:root {
+  --bg-primary: #0f1117;
+  --bg-primary-revert: #f1f5f9;
+  --bg-card: #1a1d27;
+  --border-color: #2a2d3a;
+  --text-primary: #ffffff;
+  --text-primary-revert: #0f172a;
+  --text-muted: #64748b;
+  --placeholder-color: #ffffff;
 }
 
-/* Thin scrollbar for trades feed */
+html:not(.dark) {
+  --bg-primary: #f1f5f9;
+  --bg-primary-revert: #0f1117;
+  --bg-card: #ffffff;
+  --border-color: #e2e8f0;
+  --text-primary: #0f172a;
+  --text-primary-revert: #ffffff;
+  --text-muted: #64748b;
+  --placeholder-color: #000000;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
 .scrollbar-thin {
   scrollbar-width: thin;
   scrollbar-color: #2a2d3a transparent;
