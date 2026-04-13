@@ -1,8 +1,17 @@
-import { BinanceWebSocket } from '@/services/marketSocket';
-import { fetchKlines, fetchPairs, fetchRecentTrades } from '@/services/binanceRest';
-import { KlinePayload, MiniTickerPayload, PriceData } from '@/types';
-import { toUTCTimestamp } from '@/utils/toUTCTimestamp';
-import { addTrade, setCandles, setLoadingDetail, setLoadingPairs, setPairs, setTrades, updateLastCandle, updatePrices } from '../actions/marketActions';
+import { BinanceWebSocket } from "@/services/marketSocket";
+import { fetchKlines, fetchPairs, fetchRecentTrades } from "@/services/binanceRest";
+import { KlinePayload, MiniTickerPayload, PriceData } from "@/types";
+import { toUTCTimestamp } from "@/utils/toUTCTimestamp";
+import {
+  addTrade,
+  setCandles,
+  setLoadingDetail,
+  setLoadingPairs,
+  setPairs,
+  setTrades,
+  updateLastCandle,
+  updatePrices,
+} from "../actions/marketActions";
 
 // Batch buffer for price updates — flush every 300ms
 let priceBuffer: Map<string, PriceData> = new Map();
@@ -26,8 +35,8 @@ export async function initMarket() {
   } finally {
     setLoadingPairs(false);
   }
-  const ws = new BinanceWebSocket('!miniTicker@arr', (data: MiniTickerPayload[]) => {
-    data.forEach(tick => {
+  const ws = new BinanceWebSocket("!miniTicker@arr", (data: MiniTickerPayload[]) => {
+    data.forEach((tick) => {
       priceBuffer.set(tick.s, {
         symbol: tick.s,
         price: tick.c,
@@ -36,7 +45,7 @@ export async function initMarket() {
         highPrice: tick.h,
         lowPrice: tick.l,
         lastUpdated: Date.now(),
-        direction: parseFloat(tick.c) >= parseFloat(tick.o) ? 'up' : 'down',
+        direction: parseFloat(tick.c) >= parseFloat(tick.o) ? "up" : "down",
       });
     });
     scheduleFlush();
@@ -47,10 +56,7 @@ export async function initMarket() {
 export async function initPairDetail(symbol: string) {
   setLoadingDetail(true);
   try {
-    const [candles, trades] = await Promise.all([
-      fetchKlines(symbol, '15m'),
-      fetchRecentTrades(symbol),
-    ]);
+    const [candles, trades] = await Promise.all([fetchKlines(symbol, "15m"), fetchRecentTrades(symbol)]);
     setCandles(candles);
     setTrades(trades);
   } finally {
@@ -61,8 +67,10 @@ export async function initPairDetail(symbol: string) {
     const k = data.k;
     updateLastCandle({
       time: toUTCTimestamp(k.t),
-      open: parseFloat(k.o), high: parseFloat(k.h),
-      low: parseFloat(k.l), close: parseFloat(k.c),
+      open: parseFloat(k.o),
+      high: parseFloat(k.h),
+      low: parseFloat(k.l),
+      close: parseFloat(k.c),
       volume: parseFloat(k.v),
     });
   });
@@ -72,17 +80,14 @@ export async function initPairDetail(symbol: string) {
   setTrades(trades);
 
   if (tradesWs) tradesWs.close();
-  tradesWs = new BinanceWebSocket(
-    `${symbol.toLowerCase()}@trade`,
-    (data: any) => {
-      addTrade({
-        id: data.t,
-        price: data.p,
-        quantity: data.q,
-        time: data.T,
-        isBuyerMaker: data.m,
-      });
-    }
-  );
+  tradesWs = new BinanceWebSocket(`${symbol.toLowerCase()}@trade`, (data: any) => {
+    addTrade({
+      id: data.t,
+      price: data.p,
+      quantity: data.q,
+      time: data.T,
+      isBuyerMaker: data.m,
+    });
+  });
   tradesWs.connect();
 }

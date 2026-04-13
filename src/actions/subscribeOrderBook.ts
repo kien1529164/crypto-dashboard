@@ -1,6 +1,3 @@
-import { action } from 'satcheljs';
+import { action } from "satcheljs";
 
-export const subscribeOrderBook = action(
-  'SUBSCRIBE_ORDER_BOOK',
-  (symbol: string) => ({ symbol })
-);
+export const subscribeOrderBook = action("SUBSCRIBE_ORDER_BOOK", (symbol: string) => ({ symbol }));

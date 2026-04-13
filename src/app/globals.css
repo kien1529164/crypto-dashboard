@@ -16,32 +16,44 @@
 
 :root {
   --bg-primary: #0f1117;
+  --bg-primary-revert: #f1f5f9;
   --bg-card: #1a1d27;
   --border-color: #2a2d3a;
-  --text-primary: #e2e8f0;
+  --text-primary: #ffffff;
+  --text-primary-revert: #0f172a;
   --text-muted: #64748b;
+  --placeholder-color: #ffffff;
 }
 
 html:not(.dark) {
   --bg-primary: #f1f5f9;
+  --bg-primary-revert: #0f1117;
   --bg-card: #ffffff;
   --border-color: #e2e8f0;
   --text-primary: #0f172a;
+  --text-primary-revert: #ffffff;
   --text-muted: #64748b;
+  --placeholder-color: #000000;
 }
 
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .scrollbar-thin {
   scrollbar-width: thin;
   scrollbar-color: #2a2d3a transparent;
 }
-.scrollbar-thin::-webkit-scrollbar { width: 4px; }
-.scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
 .scrollbar-thin::-webkit-scrollbar-thumb {
   background: #2a2d3a;
   border-radius: 9999px;

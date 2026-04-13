@@ -1,5 +1,5 @@
-import { updateOrderBook } from '@/actions/updateOrderBook';
-import { API_CONFIG } from '@/config/api';
+import { updateOrderBook } from "@/actions/updateOrderBook";
+import { API_CONFIG } from "@/config/api";
 
 interface DepthPayload {
   lastUpdateId: number;
@@ -14,9 +14,7 @@ const timers = new Map<string, ReturnType<typeof setInterval>>();
 export function connectOrderBook(symbol: string) {
   if (sockets.has(symbol)) return;
 
-  const ws = new WebSocket(
-    `${WS_BASE}/${symbol.toLowerCase()}@depth20@100ms`
-  );
+  const ws = new WebSocket(`${WS_BASE}/${symbol.toLowerCase()}@depth20@100ms`);
 
   let buffer: DepthPayload | null = null;
 
@@ -26,14 +24,14 @@ export function connectOrderBook(symbol: string) {
       symbol,
       buffer.bids.map(([price, quantity]) => ({ price, quantity })),
       buffer.asks.map(([price, quantity]) => ({ price, quantity })),
-      buffer.lastUpdateId
+      buffer.lastUpdateId,
     );
     buffer = null;
   }, 200);
 
-  ws.onopen = () => console.log('[orderBook] connected:', symbol);
+  ws.onopen = () => console.log("[orderBook] connected:", symbol);
   ws.onclose = (e) => {
-    console.log('[orderBook] closed:', {
+    console.log("[orderBook] closed:", {
       code: e.code,
       reason: e.reason,
       wasClean: e.wasClean,

@@ -1,15 +1,26 @@
-import { action } from 'satcheljs';
-import type { PriceData, Candle, AppSettings, CryptoPair, Trade } from '../types';
+import { action } from "satcheljs";
+import type { PriceData, Candle, AppSettings, CryptoPair, Trade } from "../types";
 
-export const setPairs = action('setPairs', (pairs: CryptoPair[]) => ({ pairs }));
-export const updatePrices = action('updatePrices', (updates: PriceData[]) => ({ updates }));
-export const setSelectedSymbol = action('setSelectedSymbol', (symbol: string) => ({ symbol }));
-export const setCandles = action('setCandles', (candles: Candle[]) => ({ candles }));
-export const updateLastCandle = action('updateLastCandle', (candle: Candle) => ({ candle }));
-export const updateSettings = action('updateSettings', (settings: Partial<AppSettings>) => ({ settings }));
-export const toggleFavorite = action('toggleFavorite', (symbol: string) => ({ symbol }));
-export const setTrades = action('setTrades', (trades: Trade[]) => ({ trades }));
-export const addTrade = action('addTrade', (trade: Trade) => ({ trade }));
-export const setLoadingPairs = action('setLoadingPairs', (value: boolean) => ({ value }));
-export const setLoadingDetail = action('setLoadingDetail', (value: boolean) => ({ value }));
-export const setTheme = action('setTheme', (theme: 'light' | 'dark') => ({ theme }));
+export const setPairs = action("setPairs", (pairs: CryptoPair[]) => ({ pairs }));
+
+export const updatePrices = action("updatePrices", (updates: PriceData[]) => ({ updates }));
+
+export const setSelectedSymbol = action("setSelectedSymbol", (symbol: string) => ({ symbol }));
+
+export const setCandles = action("setCandles", (candles: Candle[]) => ({ candles }));
+
+export const updateLastCandle = action("updateLastCandle", (candle: Candle) => ({ candle }));
+
+export const updateSettings = action("updateSettings", (settings: Partial<AppSettings>) => ({ settings }));
+
+export const toggleFavorite = action("toggleFavorite", (symbol: string) => ({ symbol }));
+
+export const setTrades = action("setTrades", (trades: Trade[]) => ({ trades }));
+
+export const addTrade = action("addTrade", (trade: Trade) => ({ trade }));
+
+export const setLoadingPairs = action("setLoadingPairs", (value: boolean) => ({ value }));
+
+export const setLoadingDetail = action("setLoadingDetail", (value: boolean) => ({ value }));
+
+export const setTheme = action("setTheme", (theme: "light" | "dark") => ({ theme }));

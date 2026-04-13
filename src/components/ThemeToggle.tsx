@@ -1,32 +1,23 @@
-'use client';
-import { observer } from 'mobx-react-lite';
-import { setTheme } from '@/actions/marketActions';
-import getStore from '@/stores/marketStore';
+"use client";
+import { observer } from "mobx-react-lite";
+import { setTheme } from "@/actions/marketActions";
+import getStore from "@/stores/marketStore";
+import { MoonIcon } from "./icons/MoonIcon";
+import { SunIcon } from "./icons/SunIcon";
 
 export const ThemeToggle = observer(() => {
   const theme = getStore().settings.theme;
-  const isDark = theme === 'dark';
+  const isDark = theme === "dark";
 
-  const toggle = () => setTheme(isDark ? 'light' : 'dark');
+  const toggle = () => setTheme(isDark ? "light" : "dark");
 
   return (
     <button
       onClick={toggle}
-      className="relative flex items-center justify-center w-9 h-9 rounded-xl border border-[#2a2d3a] bg-[#1a1d27] hover:bg-[#242736] transition-colors"
-      title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+      className="relative flex items-center justify-center w-9 h-9 rounded-xl border border-(--border-color) hover:bg-(--bg-primary-revert) transition-colors"
+      title={isDark ? "Switch to light mode" : "Switch to dark mode"}
     >
-      {isDark ? (
-        // Sun icon
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="12" cy="12" r="4"/>
-          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
-        </svg>
-      ) : (
-        // Moon icon
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-        </svg>
-      )}
+      {isDark ? <SunIcon className="text-amber-400" /> : <MoonIcon className="text-(--text-muted)" />}
     </button>
   );
 });
