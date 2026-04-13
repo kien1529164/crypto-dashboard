@@ -8,7 +8,8 @@ interface MarketStore {
   candles: Candle[];
   trades: Trade[];
   settings: AppSettings;
-  isLoading: boolean;
+  isLoadingPairs: boolean,
+  isLoadingDetail: boolean, 
   error: string | null;
 }
 
@@ -23,7 +24,8 @@ const initialState: MarketStore = {
     language: 'en',
     favorites: [],
   },
-  isLoading: false,
+  isLoadingPairs: true,
+  isLoadingDetail: true, 
   error: null,
 };
 

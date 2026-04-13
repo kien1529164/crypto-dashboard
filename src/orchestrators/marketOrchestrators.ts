@@ -2,7 +2,7 @@ import { BinanceWebSocket } from '@/services/marketSocket';
 import { fetchKlines, fetchPairs, fetchRecentTrades } from '@/services/binanceRest';
 import { KlinePayload, MiniTickerPayload, PriceData } from '@/types';
 import { toUTCTimestamp } from '@/utils/toUTCTimestamp';
-import { addTrade, setCandles, setPairs, setTrades, updateLastCandle, updatePrices } from '../actions/marketActions';
+import { addTrade, setCandles, setLoadingDetail, setLoadingPairs, setPairs, setTrades, updateLastCandle, updatePrices } from '../actions/marketActions';
 
 // Batch buffer for price updates — flush every 300ms
 let priceBuffer: Map<string, PriceData> = new Map();
@@ -19,9 +19,13 @@ function scheduleFlush() {
 }
 
 export async function initMarket() {
-  const pairs = await fetchPairs();
-  setPairs(pairs);
-
+  setLoadingPairs(true);
+  try {
+    const pairs = await fetchPairs();
+    setPairs(pairs);
+  } finally {
+    setLoadingPairs(false);
+  }
   const ws = new BinanceWebSocket('!miniTicker@arr', (data: MiniTickerPayload[]) => {
     data.forEach(tick => {
       priceBuffer.set(tick.s, {
@@ -41,8 +45,17 @@ export async function initMarket() {
 }
 
 export async function initPairDetail(symbol: string) {
-  const candles = await fetchKlines(symbol, '15m');
-  setCandles(candles);
+  setLoadingDetail(true);
+  try {
+    const [candles, trades] = await Promise.all([
+      fetchKlines(symbol, '15m'),
+      fetchRecentTrades(symbol),
+    ]);
+    setCandles(candles);
+    setTrades(trades);
+  } finally {
+    setLoadingDetail(false);
+  }
 
   const ws = new BinanceWebSocket(`${symbol.toLowerCase()}@kline_15m`, (data: KlinePayload) => {
     const k = data.k;
