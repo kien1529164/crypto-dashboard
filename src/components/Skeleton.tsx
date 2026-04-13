@@ -38,7 +38,7 @@ export function ChartSkeleton() {
 
 export function TradesSkeleton() {
   return (
-    <div className="bg-(--bg-primary) border border-[#2a2d3a] rounded-xl overflow-hidden h-[480px] flex flex-col">
+    <div className="bg-(--bg-primary) border border-[#2a2d3a] rounded-xl overflow-hidden h-120 flex flex-col">
       <div className="flex items-center justify-between px-4 py-3 border-b border-[#2a2d3a]">
         <Skeleton className="h-4 w-28" />
         <Skeleton className="h-3 w-10" />
