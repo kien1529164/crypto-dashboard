@@ -32,7 +32,13 @@ export function connectOrderBook(symbol: string) {
   }, 200);
 
   ws.onopen = () => console.log('[orderBook] connected:', symbol);
-  ws.onerror = (e) => console.error('[orderBook] error:', e);
+  ws.onclose = (e) => {
+    console.log('[orderBook] closed:', {
+      code: e.code,
+      reason: e.reason,
+      wasClean: e.wasClean,
+    });
+  };
   ws.onclose = () => {
     clearInterval(flush);
     sockets.delete(symbol);
